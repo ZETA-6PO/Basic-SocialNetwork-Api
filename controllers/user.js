@@ -34,4 +34,20 @@ exports.profile = (req,res,next) => {
         .catch(error => res.status(500).json({error: error}));
 };
 
+exports.editProfile = (req, res, next)=>{
+    const bodyObject = req.file ?
+      {
+        ...JSON.parse(req.body.profile),
+        profileImage: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+      } : {
+        ...req.body
+      }
+    User.updateOne({_id: req.body.userId}, 
+       {
+         ...bodyObject, _id: req.body.userId
+       }
+    )
+    .then(() => res.status(200).json({message: 'Successfully updated user!'}))
+    .catch(() => res.status(400).json({ error }));
+  };
 

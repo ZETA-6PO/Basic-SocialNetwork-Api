@@ -8,7 +8,7 @@ var config = require('./config.json');
 
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
-const homeRoutes = require('./routes/home');
+const mainRoutes = require('./routes/main');
 
 mongoose.connect(config.database, 
     {useNewUrlParser: true,
@@ -34,6 +34,10 @@ app.use(bodyParser.json());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
-app.use('/api/home', homeRoutes);
+app.use('/api/main', mainRoutes);
+
+app.use('/images', express.static(path.join(__dirname, 'images')));
+
+
 module.exports = app;
     

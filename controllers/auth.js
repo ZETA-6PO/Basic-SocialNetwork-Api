@@ -4,6 +4,8 @@ const User = require('../models/User');
 
 
 exports.register = (req,res,next) => {
+    console.log(req.body);
+    console.log(req.file);
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
             const user = new User({
@@ -12,6 +14,7 @@ exports.register = (req,res,next) => {
                 username: req.body.username,
                 name: req.body.name!=null?req.body.name:req.body.username.replace('@', ''),
                 bio: req.body.bio!=null?req.body.bio:"",
+                profileImage: req.file!=null?`${req.protocol}://${req.get('host')}/images/${req.file.filename}`:""
             });
             user.save()
             .then(() => res.status(201).json({ message: 'Successfully created user!' }))
@@ -21,6 +24,7 @@ exports.register = (req,res,next) => {
 };
 
 exports.login = (req,res,next) => {
+    console.log(req);
     User.findOne({ email: req.body.email })
         .then(user => {
             if (!user) {
@@ -31,7 +35,7 @@ exports.login = (req,res,next) => {
                     if (!valid) {
                         return res.status(401).json({ error: 'Incorect password'});
                     }
-                    res.status(200).json({
+                    return res.status(200).json({
                         userId: user._id,
                         token: jwt.sign(
                             { userId: user._id },

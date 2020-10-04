@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Comment = require('./Comment')
 const uniqueValidator = require('mongoose-unique-validator');
 
 const postSchema = mongoose.Schema({

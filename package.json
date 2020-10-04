@@ -1,7 +1,7 @@
 {
   "name": "postplus",
   "version": "1.0.0",
-  "description": "A simple social-network api using express.",
+  "description": "Basic social network api.",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,6 +16,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.7",
     "mongoose-unique-validator": "^2.0.3",
+    "multer": "^1.4.2",
     "path": "^0.12.7"
   }
 }
