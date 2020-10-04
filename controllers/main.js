@@ -52,6 +52,9 @@ exports.getPost = (req, res , next) => {
         .catch(error => res.status(400).json({error: error}));
 };
 exports.commentPost = (req, res, next) => {
+    if (!req.content) {
+        return res.status(404).json({error: 'Invalid args.'});
+    }
     Post.findOne({_id: req.params.id})
         .then(post => {
             if (!post) {
@@ -71,7 +74,7 @@ exports.commentPost = (req, res, next) => {
         .catch(error => res.status(400).json({error: error}));
 }
 exports.getComments = (req, res, next) => {
-    Post.findOne({_id: req.params.id})
+    Post.find({_id: req.params.id})
         .then(post=>{
             if(!post) {
                 return res.status(404).json({error: 'Unknown post id.'});
